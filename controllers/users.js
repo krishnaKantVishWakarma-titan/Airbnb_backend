@@ -14,16 +14,46 @@ const show = (req, res, next) => {
 	.catch(err => res.json({err}))
 }
 
-// create new user
-const store = (req, res, next) => {
-	let user = new User({
-		name: req.body.name,
-		email: req.body.email,
+// create new user (register)
+const register = (req, res, next) => {
+	console.log(req.body)
+	User.findOne({email: req.body.email})
+	.then(resp => {
+		if (resp != null) {
+			res.json({code: 401, mes: "User exist"})
+		} else {
+			let user = new User({
+				name: req.body.name,
+				email: req.body.email,
+				password: req.body.password,
+			})
+			user.save()
+			.then(() => res.json({
+				code: 200,
+				mes: 'User added successfully!',
+				data: user
+			}))
+			.catch(err => res.json({err}))
+		}
 	})
-	user.save()
-	.then(() => res.json({
-		mes: 'User added successfully!'
-	}))
+	.catch(err => res.json({err}))
+}
+
+// login
+const login = (req, res, next) => {
+	console.log(req.body)
+	User.findOne({ email: req.body.email })
+	.then(resp => {
+		if (resp === null) {
+			res.json({code: 401, mes: "User not exist"})
+		} else {
+			if (resp.password === req.body.password) {
+				res.json({code: 200, mes: "User exist", data: resp})
+			} else {
+				res.json({code: 402, mes: "Wrong credentials"})
+			}
+		}
+	})
 	.catch(err => res.json({err}))
 }
 
@@ -49,5 +79,5 @@ const destroy = (req, res, next) => {
 }
 
 module.exports = {
-	index, show, store, update, destroy
+	index, show, register, update, destroy, login
 }
