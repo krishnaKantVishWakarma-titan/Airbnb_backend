@@ -24,6 +24,7 @@ const register = (req, res, next) => {
 		} else {
 			let user = new User({
 				name: req.body.name,
+				username: req.body.username,
 				email: req.body.email,
 				password: req.body.password,
 			})
@@ -33,6 +34,7 @@ const register = (req, res, next) => {
 					_id: user._id,
 					name: user.name,
 					email: user.email,
+					username: user.username,
 				}
 				console.log("userobj",userObject)
 				res.json({

@@ -22,4 +22,4 @@ const postSchema = mongoose.Schema({
 }, {timestamps: true})
 
 
-module.exports = mongoose.model("Post", userSchema)
+module.exports = mongoose.model("Post", postSchema)
