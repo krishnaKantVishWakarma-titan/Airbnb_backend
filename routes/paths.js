@@ -5,6 +5,7 @@ router.use(bodyParser.json())
 const UserController = require("../controllers/users")
 
 router.get('/api/users', UserController.index)
+router.get('/api/example', UserController.example)
 
 router.post('/api/register', UserController.register)
 router.post('/api/login', UserController.login)

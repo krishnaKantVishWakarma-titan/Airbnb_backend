@@ -2,7 +2,7 @@ const User = require('../models/users')
 
 // show the list of the users
 const index = (req, res, next) => {
-	User.find()
+	User.find({}, {password: 0})
 	.then(resp => res.json({resp}))
 	.catch(err => res.json({err}))
 }
@@ -28,12 +28,20 @@ const register = (req, res, next) => {
 				password: req.body.password,
 			})
 			user.save()
-			.then(() => res.json({
-				code: 200,
-				mes: 'User added successfully!',
-				data: user
-			}))
-			.catch(err => res.json({err}))
+			.then(() => {
+				const userObject = {
+					_id: user._id,
+					name: user.name,
+					email: user.email,
+				}
+				console.log("userobj",userObject)
+				res.json({
+					code: 200,
+					mes: 'User added successfully!',
+					data: userObject
+				})
+			})
+			.catch(err => res.json({err: err}))
 		}
 	})
 	.catch(err => res.json({err}))
@@ -48,7 +56,12 @@ const login = (req, res, next) => {
 			res.json({code: 401, mes: "User not exist"})
 		} else {
 			if (resp.password === req.body.password) {
-				res.json({code: 200, mes: "User exist", data: resp})
+				const userObject = {
+					_id: resp._id,
+					name: resp.name,
+					email: resp.email,
+				}
+				res.json({code: 200, mes: "User exist", data: userObject})
 			} else {
 				res.json({code: 402, mes: "Wrong credentials"})
 			}
@@ -78,6 +91,10 @@ const destroy = (req, res, next) => {
 	.catch(err => res.json({err}))
 }
 
+const example = (req, res, next) => {
+	res.json("done")
+}
+
 module.exports = {
-	index, show, register, update, destroy, login
+	index, show, register, update, destroy, login, example
 }
