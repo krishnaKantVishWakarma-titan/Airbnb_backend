@@ -1,5 +1,17 @@
 const User = require('../models/users')
 
+const test = (req, res, next) => {
+	res.json({
+		status: 1
+	})
+}
+
+const testpost = (req, res, next) => {
+	res.json({
+		status: 1
+	})
+}
+
 // show the list of the users
 const index = (req, res, next) => {
 	User.find({}, {password: 0})
@@ -72,11 +84,17 @@ const login = (req, res, next) => {
 	.catch(err => res.json({err}))
 }
 
-// update the user
-const update = (req, res, next) => {
+// update the basic user
+const updateBasic = (req, res, next) => {
+	
 	let updatedData = {
 		name: req.body.name,
+		professional: req.body.professional,
+		about: req.body.about,
+		dob: req.body.dob,
+
 	}
+
 	User.findByIdAndUpdate(req.body.userId, {$set: updatedData})
 	.then(() => res.json({
 		mes: 'User Updated successfully!'
@@ -84,6 +102,63 @@ const update = (req, res, next) => {
 	.catch(err => res.json({err}))
 }
 
+// update the profile pic 
+const updatePic = (req,res, next)=>{
+	let updatedPic = {
+		profilePic: req.body.picurl,
+
+	}
+	User.findByIdAndUpdate(req.body.userId, {$set: updatePic})
+	.then(()=> res.json({
+		mes: 'Profile pic updated !'
+	}))
+	.catch(err=> res.json({err}))
+}
+
+// update educational details
+const updateEducation = (req, res, next)=>{
+	let updatedEducation = {
+		education : req.body.education
+	}
+	User.findByIdAndUpdate(req.body.userId, {$set : updatedEducation})
+	.then(()=> res.json({
+		mes : 'Educational details updated! '
+	}))
+	.catch(err => res.json({err}))
+}
+
+// update Address details
+const updateAddress = (req, res, next)=>{
+	let updateaddress = {
+		country : req.body.country,
+		state : req.body.state,
+		city : req.body.city,
+
+	}
+	User.findByIdAndUpdate(req.body.userId, {$set: updateaddress})
+	.then(()=> res.json({
+		mes : 'Addess updated!'
+	}))
+	.catch(err => res.json({err}))
+}
+
+// update password
+const updatepassword = (req, res, next) => {
+	// find user
+	User.findOne({ email: req.body.email })
+	.then(resp => {
+		// matching pass's
+		if (resp.password === req.body.oldPassword) {
+			// update new pass
+			User.findByIdAndUpdate(resp._id, {$set: {password: req.body.newPassword}})
+			.then(()=> res.json({code: 200, mes: "pass updated"}))
+			.catch(err => res.json({err}))
+		} else {
+			res.json({code: 402, mes: "Wrong credentials"})
+		}
+	})
+	.catch(err => res.json({err}))
+}
 // delete the user
 const destroy = (req, res, next) => {
 	User.findByIdAndRemove	(req.body.userId)
@@ -98,5 +173,5 @@ const example = (req, res, next) => {
 }
 
 module.exports = {
-	index, show, register, update, destroy, login, example
+	index, show, register,login,  updateBasic, updatePic, updateEducation, updatepassword,  destroy, example, test, testpost
 }

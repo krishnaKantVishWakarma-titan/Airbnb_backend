@@ -41,6 +41,10 @@ const userSchema = mongoose.Schema({
 		type: String,
 		default: Date.now
 	},
+	education: {
+		type : String,
+		default: ''
+	},
 	skills: {
 		type: [],
 	},
