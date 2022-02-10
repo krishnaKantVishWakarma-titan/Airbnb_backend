@@ -6,9 +6,7 @@ const e = require('express');
 require('dotenv').config();
 const nodemailer=require('nodemailer');
 
-const accountSid = 'AC138ba99ee0a1f30fb91fe71814e3e306';
-const authToken = '9aaaa034f558f09d2f02028ff45babfb';
-const client = require('twilio')(accountSid, authToken);
+// const client = require('twilio')(accountSid, authToken);
 
 // const saltRounds = 10;
 
@@ -24,14 +22,14 @@ var pool = mysql.createPool({
 
 
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  host: 'smtp.gmail.com',
-  auth: {
-      user: 'testsmtp.10001@gmail.com',
-      pass: 'testsmtp@123'
-  }
-});
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   host: '',
+//   auth: {
+//       user: '',
+//       pass: ''
+//   }
+// });
 
 exports.register = async function (req, res) {
   const password = req.body.password;
@@ -2948,51 +2946,51 @@ console.log("userIddddddddd", userId);
 }
 
 
-exports.sendVerificationCode = async function (req, res){
+// exports.sendVerificationCode = async function (req, res){
 
-    client.verify.services('VAb4ddb75413d9c7682e785d06f34ae663').verifications.create(
-        {
-          to: req.body.phone, 
-          channel: 'sms'
-        }).then(function(verification) {
+//     client.verify.services('').verifications.create(
+//         {
+//           to: req.body.phone, 
+//           channel: 'sms'
+//         }).then(function(verification) {
 
-           res.send({
-                "code": 200,
-                "status": verification.status
-              });
+//            res.send({
+//                 "code": 200,
+//                 "status": verification.status
+//               });
 
-        });
+//         });
 
-}
-
-
-exports.verifyCode = async function (req, res){
+// }
 
 
-  try {
-    client.verify.services('VAb4ddb75413d9c7682e785d06f34ae663')
-      .verificationChecks
-      .create({to: req.body.phone, code: req.body.code})
-      .then(function(verification_check) {
-          console.log(verification_check);
-           res.send({
-                "code": 200,
-                "status": verification_check.status
-              });
+// exports.verifyCode = async function (req, res){
 
-        });
-  } catch (e) {
-    logger.error(e);
-    res.send({
-                "code": 400,
-                "status": "Something went wrong!"
-              });
-  }
+
+//   try {
+//     client.verify.services('')
+//       .verificationChecks
+//       .create({to: req.body.phone, code: req.body.code})
+//       .then(function(verification_check) {
+//           console.log(verification_check);
+//            res.send({
+//                 "code": 200,
+//                 "status": verification_check.status
+//               });
+
+//         });
+//   } catch (e) {
+//     logger.error(e);
+//     res.send({
+//                 "code": 400,
+//                 "status": "Something went wrong!"
+//               });
+//   }
 
 
     
 
-}
+// }
 
 
 
