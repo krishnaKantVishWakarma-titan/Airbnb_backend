@@ -17,7 +17,11 @@ var pool = mysql.createPool({
   user     : process.env.DB_USER,
   password : "",
   database : process.env.DB_NAME,
-  debug    :  false
+  port: 3306,
+  debug    :  false,
+  connectTimeout  : 60 * 60 * 1000,
+  acquireTimeout  : 60 * 60 * 1000,
+  timeout         : 60 * 60 * 1000,
 });    
 
 
