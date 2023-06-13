@@ -6,7 +6,6 @@ const UserController = require("../controllers/users")
 const PostsController = require("../controllers/posts")
 
 router.get('/api/test', UserController.test)
-router.post('/api/test', UserController.testpost)
 
 router.get('/api/users', UserController.index)
 router.get('/api/example', UserController.example)
@@ -19,4 +18,4 @@ router.get('/api/post', PostsController.index)
 router.post('/api/post/show', PostsController.show)
 router.post('/api/post/new', PostsController.post)
 
-module.exports = router;
+module.exports = router;    

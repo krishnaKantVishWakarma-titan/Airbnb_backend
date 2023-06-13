@@ -6,11 +6,6 @@ const test = (req, res, next) => {
 	})
 }
 
-const testpost = (req, res, next) => {
-	res.json({
-		status: 1
-	})
-}
 
 // show the list of the users
 const index = (req, res, next) => {
@@ -36,7 +31,6 @@ const register = (req, res, next) => {
 		} else {
 			let user = new User({
 				name: req.body.name,
-				username: req.body.username,
 				email: req.body.email,
 				password: req.body.password,
 			})
@@ -46,7 +40,6 @@ const register = (req, res, next) => {
 					_id: user._id,
 					name: user.name,
 					email: user.email,
-					username: user.username,
 				}
 				console.log("userobj",userObject)
 				res.json({
@@ -92,9 +85,7 @@ const updateBasic = (req, res, next) => {
 		professional: req.body.professional,
 		about: req.body.about,
 		dob: req.body.dob,
-
 	}
-
 	User.findByIdAndUpdate(req.body.userId, {$set: updatedData})
 	.then(() => res.json({
 		mes: 'User Updated successfully!'
@@ -106,9 +97,8 @@ const updateBasic = (req, res, next) => {
 const updatePic = (req,res, next)=>{
 	let updatedPic = {
 		profilePic: req.body.picurl,
-
 	}
-	User.findByIdAndUpdate(req.body.userId, {$set: updatePic})
+	User.findByIdAndUpdate(req.body.userId, {$set: updatedPic})
 	.then(()=> res.json({
 		mes: 'Profile pic updated !'
 	}))
@@ -161,7 +151,7 @@ const updatepassword = (req, res, next) => {
 }
 // delete the user
 const destroy = (req, res, next) => {
-	User.findByIdAndRemove	(req.body.userId)
+	User.findByIdAndRemove(req.body.userId)
 	.then(() => res.json({
 		mes: 'User Deleted successfully!'
 	}))
@@ -173,5 +163,5 @@ const example = (req, res, next) => {
 }
 
 module.exports = {
-	index, show, register,login,  updateBasic, updatePic, updateEducation, updatepassword,  destroy, example, test, testpost
+	index, show, register,login,  updateBasic, updatePic, updateEducation, updatepassword,  destroy, example, test
 }

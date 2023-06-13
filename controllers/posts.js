@@ -9,7 +9,7 @@ const index = (req, res, next) => {
 
 // show the list of the single user
 const show = (req, res, next) => {
-	Post.findById(req.body.userId)
+	Post.findById(req.body.email)
 	.then(resp => res.json({resp}))
 	.catch(err => res.json({err}))
 }
@@ -17,9 +17,10 @@ const show = (req, res, next) => {
 // create post
 const post = (req, res, next) => {
 	let post = new Post({
-		username: req.body.username,
-		caption: req.body.caption,
-		picture: req.body.picture,
+		fullName: req.body.fullName,
+		email: req.body.email,
+		contactNumber: req.body.contactNumber,
+		resume: req.body.resume,
 	})
 	post.save()
 	.then(() => {

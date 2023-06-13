@@ -1,22 +1,19 @@
 const mongoose = require("mongoose")
 
 const postSchema = mongoose.Schema({
-	username: {
+	fullName: {
 		type: String,
 		default: ''
 	},
-	caption: {
+	email: {
 		type: String,
 		default: ''
 	},
-	picture: {
+	contactNumber: {
 		type: String,
 		default: ''
 	},
-	like: {
-		type: [],
-	},
-	comment: {
+	resume: {
 		type: [],
 	}
 }, {timestamps: true})

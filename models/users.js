@@ -5,10 +5,6 @@ const userSchema = mongoose.Schema({
 		type: String,
 		default: ''
 	},
-	username: {
-		type: String,
-		default: ''
-	},
 	email: {
 		type: String,
 		default: ''
@@ -52,6 +48,9 @@ const userSchema = mongoose.Schema({
 		type: [],
 	},
 	profilePic: {
+		type: String
+	},
+	role: {
 		type: String
 	}
 }, {timestamps: true})
